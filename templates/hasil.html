@@ -657,6 +657,194 @@
             </div>
         </div>
         
+        <!-- ALTERNATIF: JIKA INGIN MENAMPILKAN SEBAGAI CARD TERPISAH -->
+        {% if result.sparepart_data and result.sparepart_data.has_replaced_parts %}
+        <div class="card animate__animated animate__fadeIn sparepart-history-card">
+            <div class="result-header" style="background-color: var(--success);">
+                <h3><i class="fas fa-clipboard-list"></i> Riwayat Penggantian Sparepart</h3>
+                <span class="badge">{{ result.sparepart_data.replacements|length }} Item</span>
+            </div>
+            
+            <div class="result-body">
+                <p style="color: #64748b; margin-bottom: 20px; font-style: italic;">
+                    Data penggantian sparepart yang Anda inputkan:
+                </p>
+                
+                <div class="sparepart-history-grid">
+                    {% for replacement in result.sparepart_data.replacements %}
+                    <div class="sparepart-card">
+                        <div class="sparepart-card-header">
+                            <div class="sparepart-icon">
+                                {% if replacement.name == 'general' %}
+                                    <i class="fas fa-cogs"></i>
+                                {% elif 'oli' in replacement.name.lower() %}
+                                    <i class="fas fa-oil-can"></i>
+                                {% elif 'rem' in replacement.name.lower() or 'kampas' in replacement.name.lower() %}
+                                    <i class="fas fa-stop-circle"></i>
+                                {% elif 'filter' in replacement.name.lower() %}
+                                    <i class="fas fa-filter"></i>
+                                {% elif 'busi' in replacement.name.lower() %}
+                                    <i class="fas fa-bolt"></i>
+                                {% else %}
+                                    <i class="fas fa-wrench"></i>
+                                {% endif %}
+                            </div>
+                            <h4>{{ replacement.display_name }}</h4>
+                        </div>
+                        
+                        <div class="sparepart-card-body">
+                            <div class="km-info">
+                                <span class="km-label">KM Penggantian:</span>
+                                <span class="km-value">{{ "{:,}".format(replacement.km) }}</span>
+                            </div>
+                            
+                            {% set km_diff = result.form_data.kilometer|int - replacement.km %}
+                            <div class="km-since">
+                                <span class="km-since-label">KM Sejak Ganti:</span>
+                                <span class="km-since-value">{{ "{:,}".format(km_diff) }}</span>
+                            </div>
+                            
+                            <!-- Status indicator -->
+                            {% if replacement.name != 'general' %}
+                                {% set part_status = result.parts | selectattr('name', 'equalto', replacement.display_name) | first %}
+                                {% if part_status %}
+                                <div class="part-status-indicator">
+                                    {% if part_status.needs_replacement %}
+                                        <span class="status-badge status-danger">Perlu Pengecekan</span>
+                                    {% else %}
+                                        <span class="status-badge status-success">Kondisi Baik</span>
+                                    {% endif %}
+                                </div>
+                                {% endif %}
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <!-- CSS UNTUK CARD STYLE -->
+        <style>
+        .sparepart-history-card {
+            margin-top: 25px;
+        }
+
+        .sparepart-history-card .badge {
+            background-color: rgba(255,255,255,0.2);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+        }
+
+        .sparepart-history-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .sparepart-card {
+            background-color: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .sparepart-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .sparepart-card:hover {
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            transform: translateY(-5px);
+            border-color: var(--primary);
+        }
+
+        .sparepart-card-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 16px;
+            gap: 12px;
+        }
+
+        .sparepart-icon {
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .sparepart-card-header h4 {
+            margin: 0;
+            color: var(--dark);
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .sparepart-card-body > * + * {
+            margin-top: 12px;
+        }
+
+        .km-info, .km-since {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .km-label, .km-since-label {
+            color: #64748b;
+            font-size: 0.9rem;
+        }
+
+        .km-value {
+            background-color: var(--primary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .km-since-value {
+            background-color: var(--secondary);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .part-status-indicator {
+            margin-top: 12px;
+            text-align: center;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .sparepart-history-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        </style>
+
         <!-- Parts Recommendations -->
         <div class="card animate-fade-in">
             <div class="parts-section">

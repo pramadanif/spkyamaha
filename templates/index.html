@@ -7,7 +7,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
     <style>
         :root {
             --primary: #2563eb;
@@ -443,6 +442,217 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
+
+        /* PERBAIKAN LAYOUT - CARD SPAREPART DIBAWAH */
+        .main-form-container {
+            width: 100%;
+        }
+        
+        .sparepart-card {
+            width: 100%;
+            margin-top: 25px;
+            clear: both;
+        }
+        
+        .checkbox-container {
+            width: 100%;
+            margin-top: 25px;
+            margin-bottom: 15px;
+            padding: 15px;
+            background-color: #f8fafc;
+            border-radius: 8px;
+            border-left: 4px solid var(--info);
+        }
+
+        .checkbox-container label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin: 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary);
+            cursor: pointer;
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            width: auto;
+            margin: 0;
+            transform: scale(1.2);
+        }
+
+        /* Styling untuk card sparepart */
+        #part_replacement_fields {
+            background-color: white;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 25px;
+            margin-top: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+        }
+
+        .sparepart-header {
+            border-bottom: 2px solid var(--light);
+            padding-bottom: 15px;
+            margin-bottom: 25px;
+        }
+
+        .sparepart-header h4 {
+            color: var(--primary);
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+        }
+
+        .sparepart-header p {
+            color: #64748b;
+            font-size: 1rem;
+            line-height: 1.5;
+        }
+
+        /* Styling untuk entry sparepart */
+        .sparepart-entry {
+            background-color: #f8fafc;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        .sparepart-entry:hover {
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .sparepart-input-row {
+            display: grid;
+            grid-template-columns: 2fr 1fr auto;
+            gap: 20px;
+            align-items: end;
+        }
+
+        .sparepart-select-container,
+        .km-input-container {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sparepart-select-container label,
+        .km-input-container label {
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark);
+            font-size: 1rem;
+        }
+
+        .sparepart-dropdown {
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: white;
+            transition: all 0.3s ease;
+        }
+
+        .sparepart-dropdown:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .km-input-container input {
+            padding: 12px 15px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .km-input-container input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+        }
+
+        .action-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 25px;
+        }
+
+        .btn-remove-entry {
+            background-color: var(--danger);
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .btn-remove-entry:hover {
+            background-color: #dc2626;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(239, 68, 68, 0.3);
+        }
+
+        .add-entry-container {
+            text-align: center;
+            margin-top: 25px;
+            padding-top: 25px;
+            border-top: 2px solid #e5e7eb;
+        }
+
+        .btn-add-entry {
+            background-color: var(--success);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .btn-add-entry:hover {
+            background-color: #059669;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(16, 185, 129, 0.3);
+        }
+
+        .sparepart-info {
+            background-color: #f0f9ff;
+            border: 1px solid #0284c7;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 20px;
+        }
+
+        .sparepart-info i {
+            color: var(--info);
+            margin-right: 8px;
+        }
+
+        .sparepart-info small {
+            color: #0369a1;
+            line-height: 1.5;
+        }
+
+        /* Hide optgroups based on transmisi */
+        .hide-manual .manual-parts,
+        .hide-matic .matic-parts {
+            display: none !important;
+        }
         
         /* Responsive styles */
         @media (max-width: 768px) {
@@ -468,13 +678,31 @@
             .user-menu {
                 margin-top: 10px;
             }
+
+            .sparepart-input-row {
+                grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .action-container {
+                padding-top: 15px;
+                justify-content: flex-end;
+            }
+
+            .checkbox-container {
+                margin-top: 20px;
+                padding: 12px;
+            }
+
+            .checkbox-container label {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
 <body>
     <header>
         <div class="container">
-            <!-- Tambahan untuk header - tombol profile -->
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-motorcycle"></i>
@@ -493,7 +721,7 @@
     </header>
     
     <div class="container">
-        <div class="card animate__animated animate__fadeIn">
+        <div class="card animate__animated animate__fadeIn main-form-container">
             <h2><i class="fas fa-edit"></i> Form Data Servis</h2>
             <form action="/predict" method="POST">
                 <div class="form-row">
@@ -549,14 +777,10 @@
                             <input type="number" id="kilometer" name="kilometer" placeholder="Masukkan kilometer saat ini" required min="0">
                         </div>
                         
-
-                        
                         <div class="form-group">
                             <label for="km_terakhir_ganti_oli">KM Terakhir Ganti Oli <span style="color:red">*</span></label>
                             <input type="number" id="km_terakhir_ganti_oli" name="km_terakhir_ganti_oli" placeholder="Masukkan KM saat ganti oli terakhir" required min="0">
                         </div>
-
-                        
                         
                         <div class="form-group">
                             <label for="bulan_terakhir_ganti_oli">Bulan Sejak Terakhir Ganti Oli<span style="color:red">*</span></label>
@@ -599,186 +823,111 @@
                                 <option value="4">4+ Keluhan</option>
                             </select>
                         </div>
+                    </div>
+                </div>
 
-                        <!-- Penggantian konten untuk form group has_replaced_parts -->
-                        <div class="form-group">
-                            <label style="margin-bottom: 15px;">
-                                <input type="checkbox" id="has_replaced_parts" name="has_replaced_parts"> 
-                                Motor ini sudah pernah ganti sparepart
-                            </label>
+                <!-- CHECKBOX SECTION - DIPINDAH KE BAWAH FORM UTAMA -->
+                <div class="checkbox-container">
+                    <label>
+                        <input type="checkbox" id="has_replaced_parts" name="has_replaced_parts"> 
+                        <i class="fas fa-tools"></i>
+                        Motor ini sudah pernah ganti sparepart
+                    </label>
+                </div>
+
+                <!-- CARD SPAREPART - SEKARANG DIBAWAH -->
+                <div class="sparepart-card">
+                    <div id="part_replacement_fields" style="display: none;">
+                        <div class="sparepart-header">
+                            <h4>
+                                <i class="fas fa-wrench"></i>
+                                Data Penggantian Sparepart
+                            </h4>
+                            <p>
+                                Masukkan data sparepart yang sudah pernah diganti beserta kilometer saat penggantian. 
+                                Informasi ini akan membantu sistem memberikan rekomendasi yang lebih akurat.
+                            </p>
                         </div>
+                        
 
-                        <div id="part_replacement_fields" style="display: none; border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; margin-top: 10px;">
-                            <div class="replacement-mode">
-                                <h4 style="margin-bottom: 10px;">Pilih cara input data penggantian:</h4>
-                                <label>
-                                    <input type="radio" name="replacement_mode" value="general" checked> 
-                                    Saya hanya ingat KM terakhir ganti sparepart secara umum
-                                </label><br>
-                                <label>
-                                    <input type="radio" name="replacement_mode" value="detailed"> 
-                                    Saya ingat detail KM ganti untuk setiap komponen
-                                </label>
-                            </div>
-                            
-                            <!-- Mode General (default) -->
-                            <div id="general_mode" class="general-input">
-                                <div class="form-group">
-                                    <label for="km_terakhir_ganti_parts">KM Terakhir Ganti Sparepart (Umum)</label>
-                                    <input type="number" id="km_terakhir_ganti_parts" name="km_terakhir_ganti_parts" 
-                                           placeholder="Masukkan KM saat penggantian terakhir secara umum" min="0">
-                                    <small style="color: #64748b; display: block; margin-top: 5px;">
-                                        * KM ini akan digunakan sebagai acuan untuk semua komponen
-                                    </small>
-                                </div>
-                            </div>
-                            
-                            <!-- Mode Detailed -->
-                            <div id="detailed_mode" style="display: none;">
-                                <div class="part-detail-input">
-                                    <h4>Detail KM Penggantian Per Komponen</h4>
-                                    <div class="part-input-grid" id="part_inputs_matic" style="display: none;">
-                                        <!-- Matic parts -->
-                                        <div class="part-input-item">
-                                            <label>Kampas Rem</label>
-                                            <input type="number" name="km_kampas_rem" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Kampas Kopling CVT</label>
-                                            <input type="number" name="km_kampas_kopling_cvt" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>V-Belt</label>
-                                            <input type="number" name="km_v_belt" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Filter Udara</label>
-                                            <input type="number" name="km_filter_udara" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Busi</label>
-                                            <input type="number" name="km_busi" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Roller CVT</label>
-                                            <input type="number" name="km_roller_cvt" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Cover CVT</label>
-                                            <input type="number" name="km_cover_cvt" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Oil CVT</label>
-                                            <input type="number" name="km_oil_cvt" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Bearing CVT</label>
-                                            <input type="number" name="km_bearing_cvt" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Seal CVT</label>
-                                            <input type="number" name="km_seal_cvt" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Filter Bensin</label>
-                                            <input type="number" name="km_filter_bensin" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Saringan Udara</label>
-                                            <input type="number" name="km_saringan_udara" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Oli Mesin</label>
-                                            <input type="number" name="km_oli_mesin" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Filter Oli</label>
-                                            <input type="number" name="km_filter_oli" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Minyak Rem</label>
-                                            <input type="number" name="km_minyak_rem" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Oli Shock</label>
-                                            <input type="number" name="km_oli_shock" min="0" placeholder="KM">
-                                        </div>
+
+                        <!-- Container untuk input sparepart -->
+                        <div id="sparepart_entries">
+                            <!-- Entry pertama (default) -->
+                            <div class="sparepart-entry" data-entry="0">
+                                <div class="sparepart-input-row">
+                                    <div class="sparepart-select-container">
+                                        <label>Nama Sparepart</label>
+                                        <select class="sparepart-dropdown" name="sparepart_name[]" required>
+                                            <option value="" disabled selected>Pilih Sparepart</option>
+                                            <option value="general">Umum (Semua Sparepart)</option>
+                                            <optgroup label="Sparepart Matic" class="matic-parts">
+                                                <option value="kampas_rem">Kampas Rem</option>
+                                                <option value="kampas_kopling_cvt">Kampas Kopling CVT</option>
+                                                <option value="v_belt">V-Belt</option>
+                                                <option value="filter_udara">Filter Udara</option>
+                                                <option value="busi">Busi</option>
+                                                <option value="roller_cvt">Roller CVT</option>
+                                                <option value="cover_cvt">Cover CVT</option>
+                                                <option value="oil_cvt">Oil CVT</option>
+                                                <option value="bearing_cvt">Bearing CVT</option>
+                                                <option value="seal_cvt">Seal CVT</option>
+                                                <option value="filter_bensin">Filter Bensin</option>
+                                                <option value="saringan_udara">Saringan Udara</option>
+                                                <option value="oli_mesin">Oli Mesin</option>
+                                                <option value="filter_oli">Filter Oli</option>
+                                                <option value="minyak_rem">Minyak Rem</option>
+                                                <option value="oli_shock">Oli Shock</option>
+                                            </optgroup>
+                                            <optgroup label="Sparepart Manual" class="manual-parts">
+                                                <option value="kampas_rem_manual">Kampas Rem</option>
+                                                <option value="rantai">Rantai</option>
+                                                <option value="gir_depan">Gir Depan</option>
+                                                <option value="gir_belakang">Gir Belakang</option>
+                                                <option value="filter_udara_manual">Filter Udara</option>
+                                                <option value="busi_manual">Busi</option>
+                                                <option value="kampas_kopling">Kampas Kopling</option>
+                                                <option value="kabel_kopling">Kabel Kopling</option>
+                                                <option value="filter_bensin_manual">Filter Bensin</option>
+                                                <option value="saringan_udara_manual">Saringan Udara</option>
+                                                <option value="seal_front_fork">Seal Front Fork</option>
+                                                <option value="bearing_roda">Bearing Roda</option>
+                                                <option value="oli_mesin_manual">Oli Mesin</option>
+                                                <option value="filter_oli_manual">Filter Oli</option>
+                                                <option value="minyak_rem_manual">Minyak Rem</option>
+                                                <option value="oli_shock_manual">Oli Shock</option>
+                                            </optgroup>
+                                        </select>
                                     </div>
-                                    
-                                    <div class="part-input-grid" id="part_inputs_manual" style="display: none;">
-                                        <!-- Manual parts -->
-                                        <div class="part-input-item">
-                                            <label>Kampas Rem</label>
-                                            <input type="number" name="km_kampas_rem_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Rantai</label>
-                                            <input type="number" name="km_rantai" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Gir Depan</label>
-                                            <input type="number" name="km_gir_depan" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Gir Belakang</label>
-                                            <input type="number" name="km_gir_belakang" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Filter Udara</label>
-                                            <input type="number" name="km_filter_udara_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Busi</label>
-                                            <input type="number" name="km_busi_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Kampas Kopling</label>
-                                            <input type="number" name="km_kampas_kopling" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Kabel Kopling</label>
-                                            <input type="number" name="km_kabel_kopling" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Filter Bensin</label>
-                                            <input type="number" name="km_filter_bensin_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Saringan Udara</label>
-                                            <input type="number" name="km_saringan_udara_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Seal Front Fork</label>
-                                            <input type="number" name="km_seal_front_fork" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Bearing Roda</label>
-                                            <input type="number" name="km_bearing_roda" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Oli Mesin</label>
-                                            <input type="number" name="km_oli_mesin_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Filter Oli</label>
-                                            <input type="number" name="km_filter_oli_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Minyak Rem</label>
-                                            <input type="number" name="km_minyak_rem_manual" min="0" placeholder="KM">
-                                        </div>
-                                        <div class="part-input-item">
-                                            <label>Oli Shock</label>
-                                            <input type="number" name="km_oli_shock_manual" min="0" placeholder="KM">
-                                        </div>
+                                    <div class="km-input-container">
+                                        <label>Kilometer Penggantian</label>
+                                        <input type="number" name="sparepart_km[]" placeholder="Masukkan KM" min="0" required>
                                     </div>
-                                    <small style="color: #64748b; display: block; margin-top: 10px;">
-                                        * Kosongkan field untuk komponen yang belum pernah diganti
-                                    </small>
+                                    <div class="action-container">
+                                        <button type="button" class="btn-remove-entry" onclick="removeEntry(0)" style="display: none;">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
+                        <!-- Tombol Tambah Entry -->
+                        <div class="add-entry-container">
+                            <button type="button" id="add_sparepart_entry" class="btn-add-entry">
+                                <i class="fas fa-plus"></i>
+                                Tambah Sparepart Lain
+                            </button>
+                        </div>
+
+                        <!-- Info helper -->
+                        <div class="sparepart-info">
+                            <small>
+                                <i class="fas fa-info-circle"></i>
+                                <strong>Tips:</strong> Pilih "Umum" jika Anda hanya ingat KM terakhir ganti sparepart secara general, 
+                                atau pilih nama sparepart spesifik jika Anda ingat detail penggantiannya.
+                            </small>
+                        </div>
                     </div>
                 </div>
                 
@@ -847,6 +996,7 @@
             </div>
         </div>
     </div>
+    
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script>
@@ -875,17 +1025,8 @@
                 'XSR 155': 'manual'
             };
 
-            $('#kode_motor').on('select2:select', function(e) {
-                const selectedMotor = e.params.data.id;
-                const transmisi = motorTransmisiMap[selectedMotor];
-                const transmisiSelect = $('#transmisi');
-
-                if (transmisi) {
-                    transmisiSelect.val(transmisi).prop('disabled', true);
-                } else {
-                    transmisiSelect.val("").prop('disabled', false);
-                }
-            });
+            // Global variable untuk tracking entry
+            let entryCounter = 0;
 
             // 3. Auto calculate usia kendaraan
             const tahunEl = document.getElementById('tahun');
@@ -905,81 +1046,259 @@
                 tahunEl.addEventListener('input', hitungUsia);
             }
 
-            // 4. Profile button, replacement mode, and enhanced checkbox handlers
+            // 4. Profile button
             $('#profileBtn').on('click', function() {
                 window.location.href = '/profile';
             });
 
-            $('input[name="replacement_mode"]').on('change', function() {
-                const mode = $(this).val();
-                const generalMode = $('#general_mode');
-                const detailedMode = $('#detailed_mode');
-                const generalInput = $('#km_terakhir_ganti_parts');
+            // --- NEW SPAREPART REPLACEMENT LOGIC ---
 
-                if (mode === 'general') {
-                    generalMode.show();
-                    detailedMode.hide();
-                    generalInput.prop('required', true);
-                    $('#detailed_mode input[type="number"]').val('').prop('required', false);
-                } else if (mode === 'detailed') {
-                    generalMode.hide();
-                    detailedMode.show();
-                    generalInput.val('').prop('required', false);
-                    const transmisi = getTransmisiFromMotor($('#kode_motor').val());
-                    showPartInputsForTransmisi(transmisi);
-                }
-            });
-
-            function getTransmisiFromMotor(motorType) {
-                const maticMotors = ['ALL-NEW-AEROX', 'ALL-NEW-NMAX', 'FAZZIO-NEO-HY', 
-                                    'FILANO-NEO', 'FREE-GO-S', 'LEXI', 'MIO', 'MIO-M3 125', 
-                                    'NMAX-NEO-S', 'X-MAX-CONNEC'];
-                return maticMotors.includes(motorType) ? 'matic' : 'manual';
-            }
-
-            function showPartInputsForTransmisi(transmisi) {
-                const maticInputs = $('#part_inputs_matic');
-                const manualInputs = $('#part_inputs_manual');
-                if (transmisi === 'matic') {
-                    maticInputs.show();
-                    manualInputs.hide();
+            // Event handler untuk checkbox sparepart replacement
+            $('#has_replaced_parts').on('change', function() {
+                const replacementFields = $('#part_replacement_fields');
+                
+                if (this.checked) {
+                    replacementFields.slideDown(400);
+                    updateRequiredFields();
+                    updateSparepartOptions();
                 } else {
-                    maticInputs.hide();
-                    manualInputs.show();
-                }
-            }
-
-            $('#kode_motor').on('select2:select', function(e) {
-                const selectedMotor = e.params.data.id;
-                const transmisi = getTransmisiFromMotor(selectedMotor);
-                if ($('input[name="replacement_mode"]:checked').val() === 'detailed') {
-                    showPartInputsForTransmisi(transmisi);
+                    replacementFields.slideUp(400);
+                    resetAllEntries();
                 }
             });
 
-            const checkbox = document.getElementById('has_replaced_parts');
-            const kmGantiPartsDiv = document.getElementById('part_replacement_fields');
-            const kmGantiPartsInput = document.getElementById('km_terakhir_ganti_parts');
+            // Fungsi untuk menambah entry baru
+            $('#add_sparepart_entry').on('click', function() {
+                entryCounter++;
+                const newEntry = createSparepartEntry(entryCounter);
+                $('#sparepart_entries').append(newEntry);
+                updateSparepartOptions(); // Update visibility options
+                
+                $(`[data-entry="${entryCounter}"]`).hide().slideDown(300);
+                updateRemoveButtons();
+                
+                // Tambahkan event handler untuk dropdown yang baru ditambahkan
+                $(`[data-entry="${entryCounter}"] .sparepart-dropdown`).on('change', function() {
+                    updateSparepartOptions();
+                });
+            });
+            
+            // Tambahkan event handler untuk dropdown yang sudah ada
+            $(document).on('change', '.sparepart-dropdown', function() {
+                updateSparepartOptions();
+            });
 
-            if(checkbox) {
-                checkbox.addEventListener('change', function() {
-                    if (this.checked) {
-                        kmGantiPartsDiv.style.display = 'block';
-                        const currentMode = $('input[name="replacement_mode"]:checked').val();
-                        if (currentMode === 'general') {
-                            kmGantiPartsInput.required = true;
-                        }
-                    } else {
-                        kmGantiPartsDiv.style.display = 'none';
-                        kmGantiPartsInput.required = false;
-                        kmGantiPartsInput.value = '';
-                        $('#detailed_mode input[type="number"]').val('').prop('required', false);
-                        $('input[name="replacement_mode"][value="general"]').prop('checked', true);
-                        $('#general_mode').show();
-                        $('#detailed_mode').hide();
-                    }
+            // Fungsi untuk membuat HTML entry baru
+            function createSparepartEntry(index) {
+                return `
+                    <div class="sparepart-entry" data-entry="${index}">
+                        <div class="sparepart-input-row">
+                            <div class="sparepart-select-container">
+                                <label>Nama Sparepart</label>
+                                <select class="sparepart-dropdown" name="sparepart_name[]" required>
+                                    <option value="" disabled selected>Pilih Sparepart</option>
+                                    <option value="general">Umum (Semua Sparepart)</option>
+                                    <optgroup label="Sparepart Matic" class="matic-parts">
+                                        <option value="kampas_rem">Kampas Rem</option>
+                                        <option value="kampas_kopling_cvt">Kampas Kopling CVT</option>
+                                        <option value="v_belt">V-Belt</option>
+                                        <option value="filter_udara">Filter Udara</option>
+                                        <option value="busi">Busi</option>
+                                        <option value="roller_cvt">Roller CVT</option>
+                                        <option value="cover_cvt">Cover CVT</option>
+                                        <option value="oil_cvt">Oil CVT</option>
+                                        <option value="bearing_cvt">Bearing CVT</option>
+                                        <option value="seal_cvt">Seal CVT</option>
+                                        <option value="filter_bensin">Filter Bensin</option>
+                                        <option value="saringan_udara">Saringan Udara</option>
+                                        <option value="oli_mesin">Oli Mesin</option>
+                                        <option value="filter_oli">Filter Oli</option>
+                                        <option value="minyak_rem">Minyak Rem</option>
+                                        <option value="oli_shock">Oli Shock</option>
+                                    </optgroup>
+                                    <optgroup label="Sparepart Manual" class="manual-parts">
+                                        <option value="kampas_rem_manual">Kampas Rem</option>
+                                        <option value="rantai">Rantai</option>
+                                        <option value="gir_depan">Gir Depan</option>
+                                        <option value="gir_belakang">Gir Belakang</option>
+                                        <option value="filter_udara_manual">Filter Udara</option>
+                                        <option value="busi_manual">Busi</option>
+                                        <option value="kampas_kopling">Kampas Kopling</option>
+                                        <option value="kabel_kopling">Kabel Kopling</option>
+                                        <option value="filter_bensin_manual">Filter Bensin</option>
+                                        <option value="saringan_udara_manual">Saringan Udara</option>
+                                        <option value="seal_front_fork">Seal Front Fork</option>
+                                        <option value="bearing_roda">Bearing Roda</option>
+                                        <option value="oli_mesin_manual">Oli Mesin</option>
+                                        <option value="filter_oli_manual">Filter Oli</option>
+                                        <option value="minyak_rem_manual">Minyak Rem</option>
+                                        <option value="oli_shock_manual">Oli Shock</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                            <div class="km-input-container">
+                                <label>Kilometer Penggantian</label>
+                                <input type="number" name="sparepart_km[]" placeholder="Masukkan KM" min="0" required>
+                            </div>
+                            <div class="action-container">
+                                <button type="button" class="btn-remove-entry" onclick="removeEntry(${index})">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            // Fungsi untuk menghapus entry (make it global)
+            window.removeEntry = function(index) {
+                $(`[data-entry="${index}"]`).slideUp(300, function() {
+                    $(this).remove();
+                    updateRemoveButtons();
+                    updateSparepartOptions(); // Update opsi sparepart setelah menghapus entry
                 });
             }
+
+            // Fungsi untuk update visibility remove buttons
+            function updateRemoveButtons() {
+                const entries = $('.sparepart-entry');
+                if (entries.length > 1) {
+                    $('.btn-remove-entry').show();
+                } else {
+                    $('.btn-remove-entry').hide();
+                }
+            }
+
+            // Fungsi untuk update required fields
+            function updateRequiredFields() {
+                const isChecked = $('#has_replaced_parts').is(':checked');
+                $('#part_replacement_fields .sparepart-dropdown, #part_replacement_fields .km-input-container input').prop('required', isChecked);
+            }
+
+            // Fungsi untuk reset semua entries
+            function resetAllEntries() {
+                $('.sparepart-entry:not(:first)').remove();
+                const firstEntry = $('.sparepart-entry:first');
+                firstEntry.find('.sparepart-dropdown').val('');
+                firstEntry.find('.km-input-container input').val('');
+                
+                updateRequiredFields();
+                entryCounter = 0;
+                updateRemoveButtons();
+            }
+
+            // Fungsi untuk mendapatkan transmisi dari motor
+            function getTransmisiFromMotor(motorType) {
+                 return motorTransmisiMap[motorType] || null;
+            }
+
+            // Fungsi untuk update visibility sparepart options berdasarkan transmisi (make it global)
+            window.updateSparepartOptions = function() {
+                const selectedMotor = $('#kode_motor').val();
+                const transmisi = getTransmisiFromMotor(selectedMotor);
+                
+                // Kumpulkan semua sparepart yang sudah dipilih
+                const selectedParts = [];
+                let hasGeneralSelected = false;
+                
+                $('.sparepart-dropdown').each(function() {
+                    const value = $(this).val();
+                    if (value && value !== 'general') { // general tetap bisa dipilih berkali-kali
+                        selectedParts.push(value);
+                    }
+                    if (value === 'general') {
+                        hasGeneralSelected = true;
+                    }
+                });
+                
+                // Sembunyikan atau tampilkan tombol tambah sparepart berdasarkan pilihan "Umum"
+                if (hasGeneralSelected) {
+                    $('#add_sparepart_entry').hide();
+                    // Jika ada lebih dari satu entry dan salah satunya adalah general, hapus entry lainnya
+                    if ($('.sparepart-entry').length > 1) {
+                        $('.sparepart-entry').each(function() {
+                            const entryDropdown = $(this).find('.sparepart-dropdown');
+                            if (entryDropdown.val() !== 'general') {
+                                $(this).remove();
+                            }
+                        });
+                    }
+                } else {
+                    $('#add_sparepart_entry').show();
+                }
+                
+                // Update visibility berdasarkan transmisi dan sparepart yang sudah dipilih
+                $('.sparepart-dropdown').each(function() {
+                    // Reset semua option menjadi visible
+                    $(this).find('option').show();
+                    $(this).find('.manual-parts').show();
+                    $(this).find('.matic-parts').show();
+                    
+                    // Sembunyikan optgroup berdasarkan transmisi
+                    $(this).removeClass('hide-matic hide-manual');
+                    if (transmisi === 'matic') {
+                        $(this).addClass('hide-manual');
+                        $(this).find('.manual-parts').hide();
+                        $(this).find('.manual-parts option').hide();
+                    } else if (transmisi === 'manual') {
+                        $(this).addClass('hide-matic');
+                        $(this).find('.matic-parts').hide();
+                        $(this).find('.matic-parts option').hide();
+                    }
+                    
+                    // Sembunyikan sparepart yang sudah dipilih di dropdown lain (kecuali general)
+                    const currentValue = $(this).val();
+                    for (const part of selectedParts) {
+                        if (currentValue !== part && part !== 'general') {
+                            $(this).find(`option[value="${part}"]`).hide();
+                        }
+                    }
+                });
+                
+                // Update remove buttons setelah perubahan
+                 updateRemoveButtons();
+             }
+
+            // Update event handler untuk perubahan tipe motor
+            $('#kode_motor').on('select2:select', function(e) {
+                const selectedMotor = e.params.data.id;
+                const transmisi = motorTransmisiMap[selectedMotor];
+                const transmisiSelect = $('#transmisi');
+
+                if (transmisi) {
+                    transmisiSelect.val(transmisi).prop('disabled', true);
+                } else {
+                    transmisiSelect.val("").prop('disabled', false);
+                }
+                
+                // Update sparepart options jika checkbox dicentang
+                if ($('#has_replaced_parts').is(':checked')) {
+                    updateSparepartOptions();
+                }
+            });
+
+            // Reset button handler
+            $('#resetBtn').on('click', function() {
+                $('form')[0].reset();
+                $('#kode_motor').val(null).trigger('change');
+                $('#transmisi').prop('disabled', false);
+                $('#has_replaced_parts').prop('checked', false).trigger('change');
+                $('#results').fadeOut(300);
+            });
+
+            // Initial state setup
+            updateRemoveButtons();
+            if (!$('#has_replaced_parts').is(':checked')) {
+                $('#part_replacement_fields').hide();
+            }
+            updateRequiredFields();
+            
+            // Inisialisasi event handler untuk dropdown yang sudah ada
+            $('.sparepart-dropdown').on('change', function() {
+                updateSparepartOptions();
+            });
+            
+            updateSparepartOptions(); // Initialize spare part options on page load
         });
     </script>
 </body>

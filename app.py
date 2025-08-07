@@ -251,6 +251,178 @@ def logout():
 def index():
     return render_template('index.html')
 
+# TAMBAHAN UNTUK MENGHANDLE DATA SPAREPART BARU
+def process_sparepart_data(form_data):
+    """
+    Process sparepart replacement data from the new UI format
+    Returns: dict with processed sparepart information
+    """
+    sparepart_data = {
+        'has_replaced_parts': 'has_replaced_parts' in form_data,
+        'replacements': []
+    }
+    
+    if sparepart_data['has_replaced_parts']:
+        sparepart_names = form_data.getlist('sparepart_name[]')
+        sparepart_kms = form_data.getlist('sparepart_km[]')
+        
+        for name, km in zip(sparepart_names, sparepart_kms):
+            if name and km:
+                try:
+                    km_value = int(km)
+                    sparepart_data['replacements'].append({
+                        'name': name,
+                        'km': km_value,
+                        'display_name': get_sparepart_display_name(name)
+                    })
+                except (ValueError, TypeError):
+                    continue
+    
+    return sparepart_data
+
+def get_sparepart_display_name(internal_name):
+    """Convert internal sparepart names to display names"""
+    name_mapping = {
+        'general': 'Umum (Semua Sparepart)',
+        'kampas_rem': 'Kampas Rem',
+        'kampas_kopling_cvt': 'Kampas Kopling CVT',
+        'v_belt': 'V-Belt',
+        'filter_udara': 'Filter Udara',
+        'busi': 'Busi',
+        'roller_cvt': 'Roller CVT',
+        'cover_cvt': 'Cover CVT',
+        'oil_cvt': 'Oil CVT',
+        'bearing_cvt': 'Bearing CVT',
+        'seal_cvt': 'Seal CVT',
+        'filter_bensin': 'Filter Bensin',
+        'saringan_udara': 'Saringan Udara',
+        'oli_mesin': 'Oli Mesin',
+        'filter_oli': 'Filter Oli',
+        'minyak_rem': 'Minyak Rem',
+        'oli_shock': 'Oli Shock',
+        'kampas_rem_manual': 'Kampas Rem',
+        'rantai': 'Rantai',
+        'gir_depan': 'Gir Depan',
+        'gir_belakang': 'Gir Belakang',
+        'filter_udara_manual': 'Filter Udara',
+        'busi_manual': 'Busi',
+        'kampas_kopling': 'Kampas Kopling',
+        'kabel_kopling': 'Kabel Kopling',
+        'filter_bensin_manual': 'Filter Bensin',
+        'saringan_udara_manual': 'Saringan Udara',
+        'seal_front_fork': 'Seal Front Fork',
+        'bearing_roda': 'Bearing Roda',
+        'oli_mesin_manual': 'Oli Mesin',
+        'filter_oli_manual': 'Filter Oli',
+        'minyak_rem_manual': 'Minyak Rem',
+        'oli_shock_manual': 'Oli Shock'
+    }
+    return name_mapping.get(internal_name, internal_name)
+
+def calculate_km_for_general_logic(sparepart_data, kilometer):
+    """
+    Calculate km_terakhir_ganti_parts for backward compatibility with existing logic
+    """
+    if not sparepart_data['has_replaced_parts'] or not sparepart_data['replacements']:
+        return None
+    
+    general_entry = next((r for r in sparepart_data['replacements'] if r['name'] == 'general'), None)
+    if general_entry:
+        return general_entry['km']
+    
+    most_recent_km = max(r['km'] for r in sparepart_data['replacements'])
+    return most_recent_km
+
+def cek_kebutuhan_part_detailed(kilometer, transmisi, sparepart_data):
+    """
+    Enhanced version of cek_kebutuhan_part that handles detailed sparepart data
+    """
+    parts_status = {}
+    # Assuming PARTS_INTERVALS is defined globally
+    parts = PARTS_INTERVALS.get(transmisi, {})
+    
+    part_name_mapping = create_part_name_mapping(transmisi)
+    
+    # Create a reverse map from internal name to form name for easier lookup
+    reverse_part_map = {v: k for k, v in part_name_mapping.items()}
+
+    for part, interval in parts.items():
+        specific_km = None
+        internal_part_name = reverse_part_map.get(part)
+
+        # First, check for a 'general' entry
+        general_entry = next((r for r in sparepart_data.get('replacements', []) if r['name'] == 'general'), None)
+        if general_entry:
+            specific_km = general_entry['km']
+        else:
+            # If no general entry, look for a specific part entry
+            specific_entry = next((r for r in sparepart_data.get('replacements', []) if r['name'] == internal_part_name), None)
+            if specific_entry:
+                specific_km = specific_entry['km']
+
+        if specific_km is not None:
+            km_sejak_ganti = kilometer - specific_km
+        else:
+            km_sejak_ganti = kilometer
+            specific_km = 0
+        
+        km_terdekat, km_berikutnya = hitung_interval_terdekat(km_sejak_ganti, interval)
+        
+        status = "Baik"
+        if km_sejak_ganti >= interval:
+            status = "Perlu Pengecekan"
+        
+        parts_status[part] = {
+            'interval': interval,
+            'km_terdekat': (specific_km if specific_km > 0 else 0) + km_terdekat,
+            'km_berikutnya': (specific_km if specific_km > 0 else 0) + km_berikutnya,
+            'status': status,
+            'last_replaced_km': specific_km if specific_km > 0 else None
+        }
+    
+    return parts_status
+
+def create_part_name_mapping(transmisi):
+    """Create mapping from form names to internal part names"""
+    if transmisi == 'matic':
+        return {
+            'kampas_rem': 'Kampas Rem',
+            'kampas_kopling_cvt': 'Kampas Kopling CVT',
+            'v_belt': 'V-Belt',
+            'filter_udara': 'Filter Udara',
+            'busi': 'Busi',
+            'roller_cvt': 'Roller CVT',
+            'cover_cvt': 'Cover CVT',
+            'oil_cvt': 'Oil CVT',
+            'bearing_cvt': 'Bearing CVT',
+            'seal_cvt': 'Seal CVT',
+            'filter_bensin': 'Filter Bensin',
+            'saringan_udara': 'Saringan Udara',
+            'oli_mesin': 'Oli Mesin',
+            'filter_oli': 'Filter Oli',
+            'minyak_rem': 'Minyak Rem',
+            'oli_shock': 'Oli Shock'
+        }
+    else:
+        return {
+            'kampas_rem_manual': 'Kampas Rem',
+            'rantai': 'Rantai',
+            'gir_depan': 'Gir Depan',
+            'gir_belakang': 'Gir Belakang',
+            'filter_udara_manual': 'Filter Udara',
+            'busi_manual': 'Busi',
+            'kampas_kopling': 'Kampas Kopling',
+            'kabel_kopling': 'Kabel Kopling',
+            'filter_bensin_manual': 'Filter Bensin',
+            'saringan_udara_manual': 'Saringan Udara',
+            'seal_front_fork': 'Seal Front Fork',
+            'bearing_roda': 'Bearing Roda',
+            'oli_mesin_manual': 'Oli Mesin',
+            'filter_oli_manual': 'Filter Oli',
+            'minyak_rem_manual': 'Minyak Rem',
+            'oli_shock_manual': 'Oli Shock'
+        }
+
 @app.route('/predict', methods=['POST'])
 @login_required
 def predict():
@@ -310,15 +482,12 @@ def predict():
         prediksi_encoded = model.predict(input_df)
         jenis_servis = preprocessor_data['target_encoder'].inverse_transform(prediksi_encoded)[0]
 
-        # 5. Get part recommendations with logging
-        km_parts_val = data.get('km_terakhir_ganti_parts')
-        print(f"--- Calling cek_kebutuhan_part with km_terakhir_ganti_parts: '{km_parts_val}' (type: {type(km_parts_val)}) ---")
-        parts_status = cek_kebutuhan_part(
-            kilometer,
-            transmisi,
-            km_parts_val
-        )
-        print("--- cek_kebutuhan_part returned successfully ---")
+        # 5. Get part recommendations with new detailed logic
+        sparepart_data = process_sparepart_data(data)
+        parts_status = cek_kebutuhan_part_detailed(kilometer, transmisi, sparepart_data)
+
+        # For backward compatibility with model prediction if needed
+        km_parts_val = calculate_km_for_general_logic(sparepart_data, kilometer)
 
         # 6. Prepare result for the new UI template
         parts_list = [
@@ -340,6 +509,7 @@ def predict():
             'km_per_tahun': data_motor['KM_Per_Tahun'],
             'form_data': data, # Pass original form data for display
             'derived_data': data_motor, # Pass calculated data
+            'sparepart_data': sparepart_data,
             'summary': {
                 'total_komponen': total_komponen,
                 'perlu_penggantian': perlu_penggantian,
