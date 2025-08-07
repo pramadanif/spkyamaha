@@ -1,0 +1,37 @@
+Memulai pra-pemrosesan data...
+Membaca data dari: /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/indoperkasa.csv
+Jumlah data awal: 9891 baris, 14 kolom
+Jumlah data setelah seleksi fitur: 9891 baris
+Jumlah data sebelum filter jenis layanan: 9891 baris
+
+Jumlah data setelah penghapusan data tidak relevan: 9067 baris
+Data yang dihapus: 824 baris
+Data hasil preprocessing disimpan ke: /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/indoperkasa2_clean.csv
+
+=== PEMBAGIAN DATASET ===
+
+Dataset dibagi menjadi data latih dan uji (sebelum encoding).
+Data latih mentah disimpan ke: /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/train_raw.csv
+Data uji mentah disimpan ke: /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/test_raw.csv
+
+=== TRANSFORMASI DATA KATEGORIKAL ===
+Modus dihitung dari data latih: {'Kode Unit Motor': 'MIO', 'Kondisi_Oli': 'Kritis', 'Kondisi_Rem': 'Baik'}
+Encoding untuk 'Kode Unit Motor' selesai.
+Encoding untuk 'Kondisi_Oli' selesai.
+Encoding untuk 'Kondisi_Rem' selesai.
+Encoding untuk target 'Jns Service' selesai.
+
+Transformasi data kategorikal selesai.
+
+Melatih model decision tree...
+Melatih Decision Tree dengan 7253 sampel training...
+melatih decision tree dengan 1814 sampel testing...
+Terjadi error: name 'tree' is not defined
+Traceback (most recent call last):
+  File "/Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/preprocess fix.py", line 298, in <module>
+    model_results = train_decision_tree(preprocessed_data, logger)
+  File "/Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/preprocess fix.py", line 155, in train_decision_tree
+    tree.plot_tree(dt_model)
+    ^^^^
+NameError: name 'tree' is not defined. Did you mean: 'True'?
+

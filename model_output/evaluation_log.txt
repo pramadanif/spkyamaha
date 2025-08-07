@@ -1,0 +1,74 @@
+Membaca model dan data dari direktori: /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output
+✓ Model berhasil dimuat
+✓ Data test berhasil dimuat
+✓ Objek preprocessing berhasil dimuat
+
+Informasi Dataset:
+Jumlah data test: 1814 sampel
+Jumlah fitur: 10
+Jumlah kelas: 2 (repair, rutin)
+
+Melakukan prediksi pada data test...
+✓ Prediksi selesai
+
+Menghitung metrik evaluasi...
+
+============================================================
+                   HASIL EVALUASI MODEL
+============================================================
+
+**1. METRIK PERFORMA KESELURUHAN**
+----------------------------------------
+| Metric            | Score     |
+|-------------------|-----------|
+| Accuracy          | 0.9372    |
+| Precision (macro) | 0.9318    |
+| Recall (macro)    | 0.9323    |
+| F1-Score (macro)  | 0.9320    |
+----------------------------------------
+
+**2. METRIK PERFORMA PER KELAS**
+------------------------------------------------------------
+| Kelas   | Precision | Recall | F1-Score | Support |
+|---------|-----------|--------|----------|---------|
+| repair  |    0.9515 | 0.9499 |   0.9507 |    1157 |
+| rutin   |    0.9120 | 0.9148 |   0.9134 |     657 |
+------------------------------------------------------------
+
+**3. CONFUSION MATRIX**
+----------------------------------------
+| Actual\Predicted |      repair      |      rutin       |
+|------------------|------------------|------------------|
+|      repair      |       1099       |        58        |
+|      rutin       |        56        |       601        |
+|------------------|------------------|------------------|
+
+**4. INTERPRETASI HASIL**
+----------------------------------------
+Total sampel test     : 1814
+Prediksi benar        : 1700 (93.7%)
+Prediksi salah        : 114 (6.3%)
+
+Analisis per kelas:
+- repair:
+  * Aktual: 1157, Diprediksi: 1155
+  * Benar diprediksi: 1099
+  * Akurasi kelas: 95.0%
+- rutin:
+  * Aktual: 657, Diprediksi: 659
+  * Benar diprediksi: 601
+  * Akurasi kelas: 91.5%
+
+Menyimpan hasil evaluasi...
+
+============================================================
+                    FILE OUTPUT
+============================================================
+Log evaluasi lengkap  : /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/evaluation_log.txt
+Hasil evaluasi (pkl)  : /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/evaluation_results.pkl
+Confusion matrix (csv): /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/confusion_matrix.csv
+Confusion matrix (png): /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/confusion_matrix.png
+Metrik per kelas (csv): /Users/muhammadbaguspramadani/Documents/FLASHDISK DIS/APK SKRIPSI FIX/model_output/metrics_per_class.csv
+============================================================
+
+✓ Evaluasi model selesai dengan sukses!
